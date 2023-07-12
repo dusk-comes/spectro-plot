@@ -55,10 +55,13 @@ void MainWindow::tweak_scrollbar(QCPRange range)
     {
         static auto data = ui->customPlot->graph(0)->data();
         auto size = data->size();
-        auto last_value = data->at(size-1)->key;
-        ui->horizontalScrollBar->setRange(0, qRound(last_value*100));
-        ui->horizontalScrollBar->setValue(ui->horizontalScrollBar->maximum());
-        ui->horizontalScrollBar->setPageStep(qRound(range.size() * 100));
+        if (size > 0) // to protect first launch
+        {
+            auto last_value = data->at(size-1)->key;
+            ui->horizontalScrollBar->setRange(0, qRound(last_value*100));
+            ui->horizontalScrollBar->setValue(ui->horizontalScrollBar->maximum());
+            ui->horizontalScrollBar->setPageStep(qRound(range.size() * 100));
+        }
     }
 }
 
