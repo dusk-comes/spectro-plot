@@ -41,9 +41,12 @@ void MainWindow::real_time_data()
       lastPointKey = key;
     }
     // make key axis range scroll with the data (at a constant range size of 8):
-    ui->customPlot->xAxis->setRange(key, 16, Qt::AlignRight);
+    if (!ui->horizontalScrollBar->isSliderDown())
+    {
+        ui->customPlot->xAxis->setRange(key, 16, Qt::AlignRight);
+        ui->customPlot->replot();
+    }
 
-    ui->customPlot->replot();
 }
 
 void MainWindow::tweak_scrollbar(QCPRange range)
