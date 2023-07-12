@@ -17,12 +17,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-signals:
-    void value_added(int value);
-
 private slots:
     void real_time_data();
-    void tweak_scrollbar(int value);
+    void tweak_scrollbar(QCPRange);
 
 private:
     Ui::MainWindow *ui;

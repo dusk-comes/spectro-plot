@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&dataTimer, SIGNAL(timeout()), this, SLOT(real_time_data()));
     dataTimer.start(0); // Interval 0 means to refresh as fast as possible
 
-    connect(this, SIGNAL(value_added(int)), this, SLOT(tweak_scrollbar(int)));
+    connect(ui->customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), this, SLOT(tweak_scrollbar(QCPRange)));
 
     ui->customPlot->replot();
 }
@@ -41,10 +41,19 @@ void MainWindow::real_time_data()
       lastPointKey = key;
     }
     // make key axis range scroll with the data (at a constant range size of 8):
-    ui->customPlot->xAxis->setRange(key, 8, Qt::AlignRight);
+    ui->customPlot->xAxis->setRange(key, 16, Qt::AlignRight);
 
-    emit value_added(key);
     ui->customPlot->replot();
+}
+
+void MainWindow::tweak_scrollbar(QCPRange range)
+{
+    static auto data = ui->customPlot->graph(0)->data();
+    auto size = data->size();
+    auto last_value = data->at(size-1)->key;
+    ui->horizontalScrollBar->setRange(0, qRound(last_value*100));
+    ui->horizontalScrollBar->setValue(ui->horizontalScrollBar->maximum());
+    ui->horizontalScrollBar->setPageStep(qRound(range.size() * 100));
 }
 
 void MainWindow::setup_plot()
