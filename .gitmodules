@@ -1,0 +1,3 @@
+[submodule "QCustomPlot-library"]
+	path = QCustomPlot-library
+	url = https://github.com/dusk-comes/QCustomPlot-library
