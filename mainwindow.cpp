@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
     setup_plot();
 
     connect(ui->customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->xAxis2, SLOT(setRange(QCPRange)));
-    connect(ui->customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->customPlot->yAxis2, SLOT(setRange(QCPRange)));
 
     connect(&dataTimer, SIGNAL(timeout()), this, SLOT(real_time_data()));
     dataTimer.start(0); // Interval 0 means to refresh as fast as possible
