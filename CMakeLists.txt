@@ -21,11 +21,9 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS PrintSupport REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS PrintSupport REQUIRED)
 
-include_directories(.)
-
 add_subdirectory(QCustomPlot-library)
-
 add_executable(${PROJECT_NAME} ${PROJECT_FILES})
+target_include_directories(${PROJECT_NAME} PUBLIC .)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC Qt${QT_VERSION_MAJOR}::Core)
 target_link_libraries(${PROJECT_NAME} PUBLIC Qt${QT_VERSION_MAJOR}::PrintSupport)

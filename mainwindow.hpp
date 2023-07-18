@@ -2,8 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QTimer>
 #include <qcustomplot.h>
+#include <queue>
+#include <vector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,18 +18,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void set_map_size(int nx, int ny);
+    void set_map_range(double vx, double vy);
+    void set_data(std::vector<std::vector<double>> data);
+
 signals:
-    void drag(int);
 
 private slots:
-    void real_time_data();
-    void tweak_scrollbar(QCPRange);
-    void tweak_axis(int value);
 
 private:
     Ui::MainWindow *ui;
-    QTimer dataTimer;
-
-    void setup_plot();
+    QCPColorMap *color_map;
 };
 #endif // MAINWINDOW_H
