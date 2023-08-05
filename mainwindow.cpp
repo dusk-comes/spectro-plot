@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "mainwindow.hpp"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -28,11 +28,15 @@ void MainWindow::set_map_range(double vx, double vy)
 void MainWindow::set_data(std::vector<std::vector<double> > data)
 {
     set_map_size(data.size(), data.front().size());
-    for (std::size_t x; x < data.size(); ++x)
+    for (std::size_t x = 0; x < data.size(); ++x)
     {
-        for(std::size_t y; y < data.front().size(); ++y)
+        for(std::size_t y = 0; y < data.front().size(); ++y)
         {
             color_map->data()->setCell(x, y, data.at(x).at(y));
         }
     }
+
+  color_map->setGradient(QCPColorGradient::gpSpectrum);
+  color_map->rescaleDataRange();
+  ui->customPlot->rescaleAxes();
 }
