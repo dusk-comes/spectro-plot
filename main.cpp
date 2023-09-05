@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    model md("resources/test.wav", 1024U);
+    model md("resources/test.wav", 8192U);
     md.calculate();
 
     MainWindow mw;

@@ -36,7 +36,12 @@ void MainWindow::set_data(std::vector<std::vector<double> > data)
         }
     }
 
-  color_map->setGradient(QCPColorGradient::gpSpectrum);
-  color_map->rescaleDataRange();
-  ui->customPlot->rescaleAxes();
+    QCPColorGradient greenGradient;
+    greenGradient.clearColorStops();
+    greenGradient.setColorStopAt(0, QColor(0, 0, 0));
+    greenGradient.setColorStopAt(1, QColor(0, 255, 0));
+    color_map->setGradient(greenGradient);
+
+    color_map->rescaleDataRange();
+    ui->customPlot->rescaleAxes();
 }
