@@ -8,6 +8,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     setGeometry(400, 250, 542, 390);
     color_map = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
+
+    QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+    timeTicker->setTimeFormat("%m:%s:%z");
+    ui->customPlot->xAxis->setTicker(timeTicker);
 }
 
 MainWindow::~MainWindow()
