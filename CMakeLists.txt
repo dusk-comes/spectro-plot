@@ -23,7 +23,7 @@ Include(FetchContent)
 FetchContent_Declare(
     sonoplayer
     GIT_REPOSITORY https://github.com/dusk-comes/sonoplayer.git
-    GIT_TAG origin/master
+    GIT_TAG v0.1
 )
 FetchContent_MakeAvailable(sonoplayer)
 
