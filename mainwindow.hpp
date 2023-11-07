@@ -6,11 +6,14 @@
 #include <queue>
 #include <vector>
 
+#include "iobserver.hpp"
+#include "common.hpp"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public iobserver
 {
     Q_OBJECT
 
@@ -20,11 +23,7 @@ public:
 
     void set_map_size(int nx, int ny);
     void set_map_range(double vx, double vy);
-    void set_data(std::vector<std::vector<double>> data);
-
-signals:
-
-private slots:
+    void update(const SAMPLE_ARRAY&) override;
 
 private:
     Ui::MainWindow *ui;

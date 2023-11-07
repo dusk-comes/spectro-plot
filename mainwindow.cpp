@@ -12,6 +12,12 @@ MainWindow::MainWindow(QWidget *parent)
     QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
     timeTicker->setTimeFormat("%m:%s:%z");
     ui->customPlot->xAxis->setTicker(timeTicker);
+
+    QCPColorGradient greenGradient;
+    greenGradient.clearColorStops();
+    greenGradient.setColorStopAt(0, QColor(0, 0, 0));
+    greenGradient.setColorStopAt(1, QColor(0, 255, 0));
+    color_map->setGradient(greenGradient);
 }
 
 MainWindow::~MainWindow()
@@ -29,23 +35,17 @@ void MainWindow::set_map_range(double vx, double vy)
     color_map->data()->setRange(QCPRange(0, vx), QCPRange(0, vy));
 }
 
-void MainWindow::set_data(std::vector<std::vector<double> > data)
+void MainWindow::update(const SAMPLE_ARRAY &data)
 {
-    set_map_size(data.size(), data.front().size());
-    for (std::size_t x = 0; x < data.size(); ++x)
-    {
-        for(std::size_t y = 0; y < data.front().size(); ++y)
-        {
-            color_map->data()->setCell(x, y, data.at(x).at(y));
-        }
-    }
+    static std::size_t x = 0;
 
-    QCPColorGradient greenGradient;
-    greenGradient.clearColorStops();
-    greenGradient.setColorStopAt(0, QColor(0, 0, 0));
-    greenGradient.setColorStopAt(1, QColor(0, 255, 0));
-    color_map->setGradient(greenGradient);
+    for (std::size_t y = 0; y < data.size() - 1; ++y)
+    {
+        color_map->data()->setCell(x, y, data.at(y));
+    }
+    ++x;
 
     color_map->rescaleDataRange();
     ui->customPlot->rescaleAxes();
+    show();
 }
