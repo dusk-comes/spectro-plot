@@ -37,9 +37,15 @@ void MainWindow::set_map_range(double vx, double vy)
 
 void MainWindow::update(const SAMPLE_ARRAY &data)
 {
+    qRegisterMetaType<SAMPLE_ARRAY>("SAMPLE_ARRAY");
+    QMetaObject::invokeMethod(this,"update_slot", Qt::AutoConnection, Q_ARG(SAMPLE_ARRAY, data));
+}
+
+void MainWindow::update_slot(const SAMPLE_ARRAY &data)
+{
     static std::size_t x = 0;
 
-    for (std::size_t y = 0; y < data.size() - 1; ++y)
+    for (std::size_t y = 0; y < data.size(); ++y)
     {
         color_map->data()->setCell(x, y, data.at(y));
     }

@@ -9,6 +9,7 @@
 #include "iobserver.hpp"
 #include "common.hpp"
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -25,8 +26,13 @@ public:
     void set_map_range(double vx, double vy);
     void update(const SAMPLE_ARRAY&) override;
 
+public slots:
+    void update_slot(const SAMPLE_ARRAY&);
+
 private:
     Ui::MainWindow *ui;
     QCPColorMap *color_map;
 };
+
+Q_DECLARE_METATYPE(SAMPLE_ARRAY);
 #endif // MAINWINDOW_H

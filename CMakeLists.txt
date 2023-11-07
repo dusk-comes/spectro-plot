@@ -5,6 +5,7 @@ set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(${PROJECT_NAME} LANGUAGES CXX)
 
@@ -16,8 +17,8 @@ set(SRC mainwindow.cpp)
 set(UI mainwindow.ui)
 set(PROJECT_FILES ${SRC} ${UI})
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core PrintSupport Test)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core PrintSupport Test)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core PrintSupport)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core PrintSupport)
 
 Include(FetchContent)
 FetchContent_Declare(
