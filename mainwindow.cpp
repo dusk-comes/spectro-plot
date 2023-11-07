@@ -8,6 +8,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     setGeometry(400, 250, 542, 390);
     color_map = new QCPColorMap(ui->customPlot->xAxis, ui->customPlot->yAxis);
+
+    QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+    timeTicker->setTimeFormat("%m:%s:%z");
+    ui->customPlot->xAxis->setTicker(timeTicker);
 }
 
 MainWindow::~MainWindow()
@@ -36,7 +40,12 @@ void MainWindow::set_data(std::vector<std::vector<double> > data)
         }
     }
 
-  color_map->setGradient(QCPColorGradient::gpSpectrum);
-  color_map->rescaleDataRange();
-  ui->customPlot->rescaleAxes();
+    QCPColorGradient greenGradient;
+    greenGradient.clearColorStops();
+    greenGradient.setColorStopAt(0, QColor(0, 0, 0));
+    greenGradient.setColorStopAt(1, QColor(0, 255, 0));
+    color_map->setGradient(greenGradient);
+
+    color_map->rescaleDataRange();
+    ui->customPlot->rescaleAxes();
 }

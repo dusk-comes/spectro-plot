@@ -1,24 +1,19 @@
-#include "mainwindow.hpp"
-#include <vector>
 #include <QApplication>
+
+#include "mainwindow.hpp"
+#include "model.hpp"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.set_map_range(4, 4);
 
-    std::vector<std::vector<double>> data;
-    for (double i = 0.; i < 1; i += 0.01) {
-        std::vector<double> stripe;
-        for (double j = 0.; j < 1; j += 0.01) {
-            double r = 3 * qSqrt(i * i + j * j) + 1e-2;
-            double z = 2 * i * (qCos(r + 2) - qSin(r + 2)) / r;
-            stripe.push_back(z);
-        }
-        data.push_back(stripe);
-    }
-    w.set_data(data);
-    w.show();
+    model md("resources/test.wav", 8192U);
+    md.calculate();
+
+    MainWindow mw;
+    mw.set_map_size(md.stripes(), md.bins());
+    mw.set_map_range(md.stripes() * md.time_resolution().count(), md.bins() * md.freq_resolutions());
+    mw.set_data(md.m_data_to_display);
+    mw.show();
     return a.exec();
 }
